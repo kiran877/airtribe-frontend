@@ -17,7 +17,7 @@ function App() {
       { id: 7, description: "Project Completed" }
     ]
   });
-  
+
   const [selectedTask, setSelectedTask] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -111,7 +111,44 @@ function App() {
         </div>
         <button onClick={() => addTask('notStarted')}><span>+ New</span></button>
       </div>
-      {/* Repeat similar structure for 'In Progress' and 'Completed' sections */}
+
+      <div className="status">
+        <h2>
+          <label className="status-label in-progress">In progress</label>
+          <span style={{ color: '#B9B9B7' }}>{taskCounts.inProgress}</span>
+          <span className="icon-container">
+            <i className="fas fa-ellipsis-h"></i>
+            <i className="fas fa-plus"></i>
+          </span>
+        </h2>
+        <div className="tasks" id="inProgress" onDrop={(e) => drop(e, 'inProgress')} onDragOver={(e) => allowDrop(e)}>
+          {tasks.inProgress.map(task => (
+            <div className="task" key={task.id} draggable={true} onDragStart={(e) => dragStart(e, 'inProgress', task.id)} onClick={() => showDetail(task)}>
+              <p>{task.description}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => addTask('inProgress')}><span>+ New</span></button>
+      </div>
+
+      <div className="status">
+        <h2>
+          <label className="status-label completed">Completed</label>
+          <span style={{ color: '#B9B9B7' }}>{taskCounts.completed}</span>
+          <span className="icon-container">
+            <i className="fas fa-ellipsis-h"></i>
+            <i className="fas fa-plus"></i>
+          </span>
+        </h2>
+        <div className="tasks" id="completed" onDrop={(e) => drop(e, 'completed')} onDragOver={(e) => allowDrop(e)}>
+          {tasks.completed.map(task => (
+            <div className="task" key={task.id} draggable={true} onDragStart={(e) => dragStart(e, 'completed', task.id)} onClick={() => showDetail(task)}>
+              <p>{task.description}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => addTask('completed')}><span>+ New</span></button>
+      </div>
     </div>
   );
 }
